@@ -24,7 +24,7 @@ from optparse import OptionParser
 # Global Variables
 #-----------------------------------------------
 LOG_FORMAT      = '%(levelname)s\t%(asctime)s\t%(name)s\t%(funcName)s\t"%(message)s"'
-PROGRAM_VERSION = "0.0.1"
+PROGRAM_VERSION = "0.0.2"
 
 
 #-----------------------------------------------
@@ -229,15 +229,32 @@ class _MemFree:
 
     #-----------------------------------------------
 
-    def checkMemFree( self ):
+    def checkMemFree( self, withoutswap ):
         """
         閾値を評価します
+        @param withoutswap スワップ領域を除いて計算するかどうか
         @return Nagiosの規則に沿った結果を返します
         """
         self.log.debug( "START" )
+        self.log.debug( "Witout Swap: " + str(withoutswap) )
 
-        mem_total = self.mem_info[ "MemTotal" ] + self.mem_info[ "SwapTotal" ]
-        mem_free  = self.mem_info[ "MemFree" ] + self.mem_info[ "Buffers" ] + self.mem_info[ "Cached" ] + self.mem_info[ "SwapFree" ]
+        # メモリ量計算のベース値
+        mem_total = self.mem_info[ "MemTotal" ]
+        mem_free  = self.mem_info[ "MemFree" ] + self.mem_info[ "Buffers" ] + self.mem_info[ "Cached" ]
+
+        # meminfoにMemAvailableやActive/Inactive(file)がある場合は置換します
+        if "MemAvailable" in self.mem_info: #  > RHEL7
+            self.log.debug( "MemAvailable has detected." )
+            mem_free = self.mem_info[ "MemAvailable" ]
+        elif "Active(file)" in self.mem_info and "Inactive(file)" in self.mem_info: # RHEL6
+            self.log.debug( "Active/Inactive(file) has detected." )
+            mem_free = self.mem_info[ "MemFree" ] + self.mem_info[ "Active(file)" ] + self.mem_info[ "Inactive(file)" ]
+
+        # スワップを入れたい場合はその分を加算
+        if not withoutswap:
+            mem_total += self.mem_info[ "SwapTotal" ]
+            mem_free  += self.mem_info[ "SwapFree" ]
+
         mem_free_percent = ( 100.0 * mem_free ) / mem_total
 
         # 割合で評価
@@ -281,6 +298,11 @@ def main():
                       dest="critical",
                       metavar="<free>",
                       help="Exit with CRITICAL status if less than value of space is free. You can choice kilobyte (integer) or percent (%).")
+    parser.add_option("-s", "--without_swap",
+                      action="store_true",
+                      dest="withoutswap",
+                      default=False,
+                      help="Calculate without swap. Default is False.")
     parser.add_option("-V", "--verbose",
                       action="store_true",
                       dest="verbose",
@@ -310,7 +332,7 @@ def main():
     if ret != _MemFree.STATE_OK:
         logging.debug( "EXIT" )
         return ret
-    ret = mem_free.checkMemFree()
+    ret = mem_free.checkMemFree( options.withoutswap )
     if ret != _MemFree.STATE_OK:
         logging.debug( "EXIT" )
         return ret
