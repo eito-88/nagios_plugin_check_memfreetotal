@@ -143,7 +143,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapUsed )
         mem_free.setCritical( "10%" )
         mem_free.setWarning( "60%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_OK )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_OK )
 
     #-----------------------------------------------
 
@@ -154,7 +154,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapFree )
         mem_free.setCritical( "10%" )
         mem_free.setWarning( "94%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_OK )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_OK )
 
     #-----------------------------------------------
 
@@ -165,7 +165,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapNone )
         mem_free.setCritical( "10%" )
         mem_free.setWarning( "80%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_OK )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_OK )
 
     #-----------------------------------------------
 
@@ -176,7 +176,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapUsed )
         mem_free.setCritical( "1024" )
         mem_free.setWarning( "2405972" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_OK )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_OK )
 
     #-----------------------------------------------
 
@@ -187,7 +187,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapFree )
         mem_free.setCritical( "1024" )
         mem_free.setWarning( "6298216" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_OK )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_OK )
 
     #-----------------------------------------------
 
@@ -198,7 +198,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapNone )
         mem_free.setCritical( "1024" )
         mem_free.setWarning( "1542928" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_OK )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_OK )
 
     #-----------------------------------------------
 
@@ -209,7 +209,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapUsed )
         mem_free.setCritical( "60%" )
         mem_free.setWarning( "61%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -220,7 +220,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapFree )
         mem_free.setCritical( "90%" )
         mem_free.setWarning( "95%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -231,7 +231,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapNone )
         mem_free.setCritical( "80%" )
         mem_free.setWarning( "81%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -242,7 +242,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapUsed )
         mem_free.setCritical( "1000000" )
         mem_free.setWarning( "2405973" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -253,7 +253,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapFree )
         mem_free.setCritical( "5000000" )
         mem_free.setWarning( "6298217" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -264,7 +264,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapNone )
         mem_free.setCritical( "500000" )
         mem_free.setWarning( "1542929" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -275,7 +275,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapUsed )
         mem_free.setCritical( "61%" )
         mem_free.setWarning( "62%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
 
     #-----------------------------------------------
 
@@ -286,7 +286,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapFree )
         mem_free.setCritical( "95%" )
         mem_free.setWarning( "96%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
 
     #-----------------------------------------------
 
@@ -297,7 +297,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapNone )
         mem_free.setCritical( "81%" )
         mem_free.setWarning( "82%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
 
     #-----------------------------------------------
 
@@ -308,7 +308,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapUsed )
         mem_free.setCritical( "2405973" )
         mem_free.setWarning( "2405974" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
 
     #-----------------------------------------------
 
@@ -319,7 +319,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapFree )
         mem_free.setCritical( "6298217" )
         mem_free.setWarning( "6298218" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
 
     #-----------------------------------------------
 
@@ -330,7 +330,7 @@ SwapFree:              0 kB"""
         mem_free = _MemFree( self.dataSwapNone )
         mem_free.setCritical( "1542929" )
         mem_free.setWarning( "1542930" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
 
     #-----------------------------------------------
 
@@ -340,7 +340,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapUsed )
         mem_free.setWarning( "61%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -350,7 +350,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapFree )
         mem_free.setWarning( "95%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -360,7 +360,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapNone )
         mem_free.setWarning( "81%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -370,7 +370,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapUsed )
         mem_free.setWarning( "2405973" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -380,7 +380,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapFree )
         mem_free.setWarning( "6298217" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -390,7 +390,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapNone )
         mem_free.setWarning( "1542929" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_WARNING )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_WARNING )
 
     #-----------------------------------------------
 
@@ -400,7 +400,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapUsed )
         mem_free.setCritical( "61%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
 
     #-----------------------------------------------
 
@@ -410,7 +410,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapFree )
         mem_free.setCritical( "95%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
 
     #-----------------------------------------------
 
@@ -420,7 +420,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapNone )
         mem_free.setCritical( "81%" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
 
     #-----------------------------------------------
 
@@ -430,7 +430,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapUsed )
         mem_free.setCritical( "2405973" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
 
     #-----------------------------------------------
 
@@ -440,7 +440,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapFree )
         mem_free.setCritical( "6298217" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
 
     #-----------------------------------------------
 
@@ -450,7 +450,7 @@ SwapFree:              0 kB"""
         """
         mem_free = _MemFree( self.dataSwapNone )
         mem_free.setCritical( "1542929" )
-        self.assertEqual( mem_free.checkMemFree(), _MemFree.STATE_CRITICAL )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_CRITICAL )
         
     #-----------------------------------------------
 
