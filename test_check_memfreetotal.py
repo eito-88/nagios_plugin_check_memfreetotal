@@ -36,6 +36,21 @@ Buffers:          230164 kB
 Cached:          1228664 kB
 SwapTotal:             0 kB
 SwapFree:              0 kB"""
+        self.dataRHEL6 = """MemTotal:        3774832 kB
+MemFree:         1676628 kB
+Buffers:              84 kB
+Cached:           856536 kB
+Active(file):     225336 kB
+Inactive(file):   444076 kB
+SwapTotal:       4063228 kB
+SwapFree:        3611828 kB"""
+        self.dataRHEL7 = """MemTotal:        3774832 kB
+MemFree:         1690284 kB
+MemAvailable:    2228584 kB
+Buffers:              84 kB
+Cached:           853608 kB
+SwapTotal:       4063228 kB
+SwapFree:        3611828 kB"""
         pass
 
     #-----------------------------------------------
@@ -199,6 +214,50 @@ SwapFree:              0 kB"""
         mem_free.setCritical( "1024" )
         mem_free.setWarning( "1542928" )
         self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_OK )
+
+    #-----------------------------------------------
+
+    def test_validCheck_OK_7( self ):
+        """
+        バリデーション 正常チェック % スワップあり (RHEL 6)
+        """
+        mem_free = _MemFree( self.dataRHEL6 )
+        mem_free.setCritical( "10%" )
+        mem_free.setWarning( "60%" )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_OK )
+
+    #-----------------------------------------------
+
+    def test_validCheck_OK_8( self ):
+        """
+        バリデーション 正常チェック % スワップ未考慮 (RHEL 6)
+        """
+        mem_free = _MemFree( self.dataRHEL6 )
+        mem_free.setCritical( "10%" )
+        mem_free.setWarning( "60%" )
+        self.assertEqual( mem_free.checkMemFree( True ), _MemFree.STATE_OK )
+
+    #-----------------------------------------------
+
+    def test_validCheck_OK_9( self ):
+        """
+        バリデーション 正常チェック % スワップあり (RHEL 7)
+        """
+        mem_free = _MemFree( self.dataRHEL7 )
+        mem_free.setCritical( "10%" )
+        mem_free.setWarning( "60%" )
+        self.assertEqual( mem_free.checkMemFree( False ), _MemFree.STATE_OK )
+
+    #-----------------------------------------------
+
+    def test_validCheck_OK_10( self ):
+        """
+        バリデーション 正常チェック % スワップ未考慮 (RHEL 7)
+        """
+        mem_free = _MemFree( self.dataRHEL7 )
+        mem_free.setCritical( "10%" )
+        mem_free.setWarning( "50%" )
+        self.assertEqual( mem_free.checkMemFree( True ), _MemFree.STATE_OK )
 
     #-----------------------------------------------
 
